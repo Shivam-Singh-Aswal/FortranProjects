@@ -27,56 +27,60 @@ module projectRecord
         character(30) :: Remark = "Remarks (if any)"
 
         !Colours
-        integer SysColor, FieldTextColor
+        integer SysColor, FieldTextColor, Blue
         SysColor = rgb@(0, 0, 0)
         FieldTextColor = rgb@(50, 50, 200)
+        Blue = rgb@(0, 0, 100)
         
         title = "New Project"
 
         !The caption and the window menu bar
-        win2 = winio@('%sz&', 1100, 1100)
+        win2 = winio@('%ww[maximise]%sz&', 1600, 1000)
         win2 = winio@('%ca[New Project]&')
         win2 = winio@('%mn[Exit]&', 'exit')
 
         !Top Menu Bar and icon and Heading
-        win2 = winio@('%fn[Consolas]%ts&', 1.2D0)
-        win2 = winio@('%bg[grey]%ob[bottom_exit, invisible]'//&
+        win2 = winio@('%cn%ob[]%fn[Consolas]%ts&', 1.2D0)
+        win2 = winio@('%bg[grey]%nl  %ob[bottom_exit, invisible]'//&
                     & '%ob[invisible]%^8bt[New]%cb '//&
                     & '%ob[invisible]%8bt[Open]%cb '//&
                     & '%ob[invisible]%8bt[Help]%cb '//&
                     & '%ob[invisible]%8bt[About]%cb '//&
                     & '%cb%nl&', fnNewAgain)
-        win2 = winio@('%fn[Calibri]%ts&', 4.0D0)
-        win2 = winio@('%2.1ob[bottom_exit, invisible]%ic[folder]%cb%nl%cn%2taNew Project%2ta%cb&')
+        win2 = winio@('%2.1ob[bottom_exit, invisible]%nl%10ta%fn[Verdana]%ts%bf%tc'//&
+                    & 'New Project%`bf%cb%ta%ic[folder]%cb&', 4.0D0, Blue)
 
         !The main body
-        win2 = winio@('%fn[Consolas]%2.1ob[raised]%ts&', 1.3D0)
+        win2 = winio@('%tc%fn[Consolas]%ts%nl%2.1ob[invisible]&', SysColor, 1.3D0)
         !Field Name
-        win2 = winio@('%ob%2nl[Name]%3ta%`bg[white]%tc%co[right_justify]%30rs%tc&'&
+        win2 = winio@('  %ob[invisible][Name]%nl%2ta%`bg[white]%tc%co[right_justify]%30rs%tc&'&
                     &, FieldTextColor, title, SysColor)
         !Description field 
-        win2 = winio@('%2nl[Desc]%3ta%`bg[white]%tc%co[]%30.2re[right_text]%tc&'&
+        win2 = winio@('%2nl[Desc]%nl%2ta%`bg[white]%tc%co[]%30.3re[right_text]%tc&'&
                     &, FieldTextColor, description, SysColor)
         !Resources field 
-        win2 = winio@('%3nl[Resources Required]%ta%`bg[white]%tc%co[]%30.2re[right_text]%tc&'&
-                    &, FieldTextColor, rscs, SysColor)
+        win2 = winio@('%4nl[Resources Required]%2nl%2ta%`bg[white]%tc%co[right_justify]%30rs%tc%nl%ts%rj%8bt[Add]%ts&'&
+                    &, FieldTextColor, rscs, SysColor, 1.0D0, 1.3D0)
         !Date field 
-        win2 = winio@('%4nl[Deadline]%3ta%`bg[white]%tc%co[right_justify]%30rs%tc&'&
+        win2 = winio@('%2nl[Deadline]%nl%2ta%`bg[white]%tc%co[right_justify]%30rs%tc&'&
                     &, FieldTextColor, "28:04:1966", SysColor)
         !Prerequisite field 
-        win2 = winio@('%2nl[Prerequisite]%2ta%`bg[white]%tc%co[]%30.2re[right_text]%tc&'&
-                    &, FieldTextColor, preReq, SysColor)
+        win2 = winio@('%2nl[Prerequisite]%nl%2ta%`bg[white]%tc%co[]%30rs[right_text]%tc%nl%ts%rj%8bt[Add]%ts&'&
+                    &, FieldTextColor, preReq, SysColor, 1.0D0, 1.3D0)
         !Cost field 
-        win2 = winio@('%3nl[Cost]%3ta%`bg[white]%tc%co[right_justify]%30rs%tc&'&
+        win2 = winio@('%2nl[Cost]%nl%2ta%`bg[white]%tc%co[right_justify]%30rs%tc&'&
                     &, FieldTextColor, "Rs. 100", SysColor)
+        win2 = winio@('%nl %cb%tc%cb&', SysColor)
+
+        !2nd Block
         !Progress field
-        !win2 = winio@('%2nl[Progress]%3ta%`bg[white]%tc%co[]%30.2re[right_text]%tc&'&
-        !            &, FieldTextColor, progress, SysColor)
+        win2 = winio@('%ta%ob[invisible]&')
+        win2 = winio@('%nl[Progress]%2ta%`bg[white]%tc%co[]%30.2re[right_text]%tc&'&
+                    &, FieldTextColor, progress, SysColor)
         !Remark field
-        !win2 = winio@('%3nl[Remark]%3ta%`bg[white]%tc%co[]%30.2re[right_text]&'&
-        !            &, FieldTextColor, Remark)
-        win2 = winio@('%2nl %cb%tc&', SysColor)
-        win2 = winio@('%cbhhh%cb')
+        win2 = winio@('%3nl[Remark]%2ta%`bg[white]%tc%co[]%30.2re[right_text]&'&
+                    &, FieldTextColor, Remark)
+        win2 = winio@('%cb%cb%ta%cb')
         fnNew = 1
     end function fnNew 
 
@@ -90,4 +94,4 @@ end module projectRecord
 
 
 RESOURCES 
-    folder ICON "folde.ico"
+    folder ICON "folder.ico"
