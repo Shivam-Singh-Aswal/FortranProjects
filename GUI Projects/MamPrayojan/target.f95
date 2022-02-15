@@ -6,6 +6,7 @@ module projectRecord
 
     !These are the main window variables
     integer win1, winio@, fnNew
+    character(200) savePath 
 
     !The new project window variables (np refers to new project)
     integer np_win      !New project window
@@ -18,6 +19,8 @@ module projectRecord
     character(30) :: np_Remark = "Remarks (if any)"
     character(5) :: np_cost 
     
+    !The open file window variables ('open' refers to open file)
+    character(200) :: openFile_name = "" 
 
     CONTAINS 
 
@@ -44,7 +47,7 @@ module projectRecord
         !Creating the controls for newfile, open file, search etc.
         win1 = winio@('%fn[Calibri]%ts%tc%3nl%ob[]&', 1.6D0, black)
         win1 = winio@('%ta%1.2ob[]%^ic[filecreate]%cbNew Project%cb&', fnNew)
-        win1 = winio@('%ta%1.2ob[]%ic[fileopen]%cbOpen project%cb&')
+        win1 = winio@('%ta%1.2ob[]%^ic[fileopen]%cbOpen project%cb&', openFile)
         win1 = winio@('%ta%1.2ob[]%ic[filesearch]%cbSearch project%cb&')
         win1 = winio@('%6nl %cb%cb')
         
@@ -163,11 +166,22 @@ module projectRecord
     end function saveData 
 
 
-    integer function fnNewAgain()
-        integer j
-        j = fnNew()
-        fnNewAgain = j 
-    end function fnNewAgain
+    integer function openFile()
+        integer openFile_win 
+        openFile_name = ""
+        
+        openFile_win = winio@('%ca[Choose file to open]&')
+        openFile_win = winio@('%fs[D:\*.*]&')
+        openFile_win = winio@('%^bt[Open]', 'FILE_OPENR', openFile_name, cb_openFile)
+
+        openFile = 1  
+    end function openFile
+
+
+    integer function cb_openFile()
+        cb_openFile = 0
+    end function cb_openFile 
+
 
 end module projectRecord 
 
